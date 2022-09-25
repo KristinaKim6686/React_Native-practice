@@ -6,8 +6,9 @@ import {
   StyleSheet,
   Platform,
   KeyboardAvoidingView,
+  Dimensions,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
 
 export const Login = ({
@@ -16,20 +17,48 @@ export const Login = ({
   showKeyboard,
   text,
   setText,
+  fonts,
 }) => {
-  const [fontsLoaded] = useFonts({
-    MainFont: require("../../../assets/fonts/Rajdhani-Regular.ttf"),
-    InputFont: require("../../../assets/fonts/Pacifico-Regular.ttf"),
-  });
+  // const [fontsLoaded] = useFonts({
+  //   MainFont: require("../../../assets/fonts/Rajdhani-Regular.ttf"),
+  //   InputFont: require("../../../assets/fonts/Pacifico-Regular.ttf"),
+  // });
+  const [dimensions, setDimensions] = useState(
+    Dimensions.get("window").width - 20 * 2
+  );
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width - 20 * 2;
+      console.log(("width", width));
+    };
+    Dimensions.addEventListener("change", onChange);
+    return () => Dimensions.removeEventListener("change", onChange);
+  }, []);
 
   return (
     <>
       <KeyboardAvoidingView>
-        <View style={{ ...styles.form, marginBottom: showKeyboard ? 20 : 100 }}>
+        <View
+          style={{
+            ...styles.form,
+            marginBottom: showKeyboard ? 20 : 100,
+            // width: dimensions,
+          }}>
           <View>
-            <Text style={styles.title}>Email</Text>
+            <Text
+              style={{
+                ...styles.title,
+                fontFamily: "sans-serif-light",
+              }}>
+              Email
+            </Text>
             <TextInput
-              style={{ ...styles.input, fontFamily: "InputFont" }}
+              style={{
+                ...styles.input,
+                fontFamily: "notoserif",
+                width: dimensions,
+              }}
               textAlign={"center"}
               onFocus={() => setShowKeyboard()}
               value={text.email}
@@ -39,9 +68,15 @@ export const Login = ({
             />
           </View>
           <View>
-            <Text style={styles.title}>Password</Text>
+            <Text style={{ ...styles.title, fontFamily: "sans-serif-light" }}>
+              Password
+            </Text>
             <TextInput
-              style={styles.input}
+              style={{
+                ...styles.input,
+                fontFamily: "notoserif",
+                width: dimensions,
+              }}
               textAlign={"center"}
               secureTextEntry={true}
               onFocus={() => setShowKeyboard()}
@@ -55,7 +90,10 @@ export const Login = ({
             style={styles.btn}
             activeOpacity={0.8}
             onPress={() => handleLogin()}>
-            <Text style={styles.btnTitle}>Sign in</Text>
+            <Text
+              style={{ ...styles.btnTitle, fontFamily: "sans-serif-light" }}>
+              Sign in
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -68,7 +106,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   title: {
-    fontFamily: "MainFont",
+    // fontFamily: "MainFont",
     color: "#9f7b29",
     fontSize: 18,
   },
@@ -76,7 +114,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#8f6b29",
     borderRadius: 6,
-    width: 236,
+    // width: 236,
     color: "#8f6b29",
     paddingVertical: 4,
     paddingHorizontal: 12,
@@ -103,7 +141,7 @@ const styles = StyleSheet.create({
   },
   btnTitle: {
     fontSize: 18,
-    fontFamily: "MainFont",
+    // fontFamily: "MainFont",
     ...Platform.select({
       ios: { color: "#8f6b29" },
       android: { color: "#fffbe6" },

@@ -16,7 +16,7 @@ const initialState = {
   password: "",
 };
 
-export default function Layout() {
+export default function Layout({ fonts }) {
   const [text, setText] = useState(initialState);
 
   const [showKeyboard, setShowKeyboard] = useState(false);
@@ -48,6 +48,7 @@ export default function Layout() {
             showKeyboard={showKeyboard}
             text={text}
             setText={setText}
+            fonts={fonts}
           />
           <StatusBar style='auto' />
         </ImageBackground>
