@@ -1,6 +1,6 @@
-import Layout from "./src/components/Layout";
-import { Text } from "react-native";
-import { useEffect, useCallback } from "react";
+import Main from "./src/screens/Main";
+import { ImageBackground, StyleSheet, View } from "react-native";
+// import { useEffect, useCallback } from "react";
 import { useFonts } from "expo-font";
 // import * as SplashScreen from "expo-splash-screen";s
 
@@ -26,9 +26,7 @@ export default function App() {
   //   return null;
   // }
 
-  return (
-    <>
-      <Layout fonts={[fontsLoaded]} />
-    </>
-  );
+  return <Main fonts={[fontsLoaded]} />;
 }
+
+const styles = StyleSheet.create({});
